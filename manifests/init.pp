@@ -82,6 +82,16 @@ class pe_external_postgresql (
       db_password => $classifier_db_password,
     }
 
+    pe_external_postgresql::replica_user {'pe-classifier-read':
+      db_password  => $classifier_db_password,
+      write_access => false,
+    }
+
+    pe_external_postgresql::replica_user {'pe-classifier-write':
+      db_password  => $classifier_db_password,
+      write_access => true,
+    }
+
     # RBAC Database
     pe_external_postgresql::database { 'pe-rbac':
       db_password => $rbac_db_password,
